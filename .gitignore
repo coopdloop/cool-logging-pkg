@@ -1,0 +1,11 @@
+# env
+/env
+# build
+/build
+# dist
+/dist
+# vscode
+.vscode
+
+# egg-info
+*.egg-info
