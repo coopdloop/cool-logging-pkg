@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="cool-logging",
-    version="0.0.1",
+    name="cool_logging",
+    version="0.0.2",
     packages=find_packages(),
     install_requires=[
         "requests",
