@@ -7,19 +7,23 @@ find = {}  # Scan the project directory with the default parameters
 
 [project]
 name = "cool_logging"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Cooper Wallace", email="cooper@lariatlabs.dev" },
 ]
 description = "A cool logging library"
 readme = "README.md"
 requires-python = ">=3.7"
+keywords = ["logging", "cool", "awesome"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-
+dependencies = [
+  "requests>=2.31.0",
+  "termcolor>=2.3.0",
+]
 [project.urls]
 "Homepage" = "https://github.com/coopdloop/cool-logging-pkg"
 "Bug Tracker" = "https://github.com/coopdloop/cool-logging-pkg/issues"
