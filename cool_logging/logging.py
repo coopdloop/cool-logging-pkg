@@ -18,7 +18,8 @@ class CoolLogger:
                 log_file.write(log_entry + '\n')
         else:
             print(log_entry)
-
+            
+    @staticmethod
     def simple_logging(func):
         """Simple logging decorator"""
         @wraps(func)
@@ -27,9 +28,9 @@ class CoolLogger:
                 result = func(*args, **kwargs)
                 # method = colored(func.__name__, color="blue")
                 method_all = colored(func.__qualname__, color="blue")
-                args = colored(args, color='yellow')
-                kwargs = colored(kwargs, color='magenta')
-                response = f"call to {method_all} {args} {kwargs}"
+                args_str = colored(str(args), color='yellow')
+                kwargs_str = colored(str(kwargs), color='magenta')
+                response = f"call to {method_all} {args_str} {kwargs_str}"
                 if func.__name__ in "__log":
                     response = f"logging {colored(result, 'cyan', attrs=['bold'])}"
                 print(
@@ -47,5 +48,5 @@ class CoolLogger:
         return wrapper
 
     @simple_logging
-    def text_log(text):
+    def text_log(self, text):
         return text
