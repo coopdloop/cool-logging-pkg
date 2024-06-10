@@ -4,6 +4,32 @@ import requests
 from functools import wraps
 from termcolor import colored
 
+def simple_logging(func):
+    """Simple logging decorator"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            # method = colored(func.__name__, color="blue")
+            method_all = colored(func.__qualname__, color="blue")
+            args_str = colored(str(args), color='yellow')
+            kwargs_str = colored(str(kwargs), color='magenta')
+            response = f"call to {method_all} {args_str} {kwargs_str}"
+            if func.__name__ in "__log":
+                response = f"logging {colored(result, 'cyan', attrs=['bold'])}"
+            print(
+                colored(text=f"{datetime.now():%H:%M:%S}", color="green"),
+                end=" ")
+            print(f"{response}")
+            return result
+        except requests.exceptions.RequestException as err:
+            if isinstance(err, requests.exceptions.HTTPError):
+                print(
+                    colored(
+                        text=f"{datetime.now():%H:%M:%S}", color="red"),
+                    end=" ")
+                print(f"{err}")
+    return wrapper
 
 class CoolLogger:
     def __init__(self, log_file_path=None):
@@ -19,33 +45,7 @@ class CoolLogger:
         else:
             print(log_entry)
             
-    @staticmethod
-    def simple_logging(func):
-        """Simple logging decorator"""
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            try:
-                result = func(*args, **kwargs)
-                # method = colored(func.__name__, color="blue")
-                method_all = colored(func.__qualname__, color="blue")
-                args_str = colored(str(args), color='yellow')
-                kwargs_str = colored(str(kwargs), color='magenta')
-                response = f"call to {method_all} {args_str} {kwargs_str}"
-                if func.__name__ in "__log":
-                    response = f"logging {colored(result, 'cyan', attrs=['bold'])}"
-                print(
-                    colored(text=f"{datetime.now():%H:%M:%S}", color="green"),
-                    end=" ")
-                print(f"{response}")
-                return result
-            except requests.exceptions.RequestException as err:
-                if isinstance(err, requests.exceptions.HTTPError):
-                    print(
-                        colored(
-                            text=f"{datetime.now():%H:%M:%S}", color="red"),
-                        end=" ")
-                    print(f"{err}")
-        return wrapper
+
 
     @simple_logging
     def text_log(self, text):
